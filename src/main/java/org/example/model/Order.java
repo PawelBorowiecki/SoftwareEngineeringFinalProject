@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class Order {
-    private int id;
+    private String id;
     private LocalDateTime date;
     private List<Product> products;
-    private int clientId;
-    private int employeeId;
+    private String clientId;
+    private String employeeId;
     private boolean isCancelled = false;
     private boolean forClient;
 
-    public Order(int clientId, int employeeId, boolean forClient) {
-        this.id = Integer.parseInt(UUID.randomUUID().toString());
+    public Order(String clientId, String employeeId, boolean forClient) {
+        this.id = UUID.randomUUID().toString();
         this.date = LocalDateTime.now();
         this.clientId = clientId;
         this.employeeId = employeeId;
@@ -42,7 +42,7 @@ public class Order {
         this.isCancelled = true;
     }
 
-    public int getId(){
+    public String getId(){
         return this.id;
     }
 
@@ -50,11 +50,11 @@ public class Order {
         return this.date;
     }
 
-    public int getClientId(){
+    public String getClientId(){
         return this.clientId;
     }
 
-    public int getEmployeeId() {
+    public String getEmployeeId() {
         return employeeId;
     }
 }

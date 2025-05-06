@@ -23,7 +23,7 @@ public class OrderService {
         log(order, order.getEmployeeId(), "Active");
     }
 
-    public void cancellOrder(int orderId){
+    public void cancellOrder(String orderId){
         Optional<Order> order = this.orderRepository.getOrder(orderId);
         if(order.isPresent()){
             order.get().cancell();
@@ -33,7 +33,7 @@ public class OrderService {
         }
     }
 
-    private void log(Order order, int employeeId, String state){
+    private void log(Order order, String employeeId, String state){
         Log log = new Log(order.getId(), employeeId,state);
         this.logRegister.addLog(log);
     }

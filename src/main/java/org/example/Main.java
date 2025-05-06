@@ -9,14 +9,15 @@ import org.example.repository.ProductRepository;
 import org.example.service.LogRegister;
 import org.example.service.OrderService;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         //TODO rozwarzyc zapisy do plikow i czy konieczne jest odczytywanie z plikow
-        int option, id, quantity;
-        String type, name;
+        int option, quantity;
+        String type, name, id;
         Scanner scanner = new Scanner(System.in);
         Client client = null;
         ClientRepository clientRepository = new ClientRepository();
@@ -30,12 +31,13 @@ public class Main {
         System.out.println("Witaj w systemie do zarzadzania hurtownia.");
         while(true){
             System.out.println("Podaj co chcesz zrobic.\n" +
-                    "1: zlozenie zamowienie klienta\n" +
+                    "1: zlozenie zamowienia klienta\n" +
                     "2: anulowanie zamowienia klienta\n" +
                     "3: dodanie produktu do hurtownii\n" +
                     "4: usuwanie produktu z hurtowni\n" +
-                    "5: zapis logow do pliku\n" +
-                    "6: wyczyszczenie logow\n" +
+                    "5: wylistowanie wszystkich klientow\n" +
+                    "6: zapis logow do pliku\n" +
+                    "7: wyczyszczenie logow\n" +
                     "inny znak: koniec dzialania programu");
             option = scanner.nextInt();
             if(option == 1){
@@ -46,7 +48,7 @@ public class Main {
                     clientRepository.addClient(client);
                 }else{
                     System.out.println("Podaj id klienta");
-                    id = scanner.nextInt();
+                    id = scanner.next();
                     Optional<Client> optClient = clientRepository.getClient(id);
                     if(optClient.isPresent()){
                         client = optClient.get();
@@ -57,7 +59,7 @@ public class Main {
                 employee.addOrder(client.getId());
             }else if(option == 2){
                 System.out.println("Podaj id zamowienia, ktore chcesz anulowac.");
-                id = scanner.nextInt();
+                id = scanner.next();
                 employee.removeOrder(id);
             }else if(option == 3){
                 System.out.println("Podaj typ produktu.");
@@ -76,8 +78,13 @@ public class Main {
                 quantity = scanner.nextInt();
                 employee.removeProduct(type, name, quantity);
             }else if(option == 5){
-                logRegister.saveToFile();
+                List<Client> clients = clientRepository.getClients();
+                for(Client c : clients){
+                    System.out.println(c.toString());
+                }
             }else if(option == 6){
+                logRegister.saveToFile();
+            }else if(option == 7){
                 logRegister.clear();
             }else{
                 System.out.println("Dziekujemy za skorzystanie z systemu.");

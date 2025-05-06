@@ -17,16 +17,16 @@ public class OrderRepository {
         return this.orders;
     }
 
-    public Optional<Order> getOrder(int id){
-        return this.orders.stream().filter(o -> o.getId() == id).findFirst();
+    public Optional<Order> getOrder(String id){
+        return this.orders.stream().filter(o -> o.getId().equals(id)).findFirst();
     }
 
     public List<Order> getOrdersByDate(String date){
         return this.orders.stream().filter(o -> o.getDate().equals(date)).toList();
     }
 
-    public List<Order> getOrdersByClientId(int clientId){
-        return this.orders.stream().filter(o -> o.getClientId() == clientId).toList();
+    public List<Order> getOrdersByClientId(String clientId){
+        return this.orders.stream().filter(o -> o.getClientId().equals(clientId)).toList();
     }
 
     public void addOrder(Order order){

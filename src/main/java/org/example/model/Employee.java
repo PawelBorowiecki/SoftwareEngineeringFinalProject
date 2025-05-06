@@ -10,21 +10,21 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class Employee {
-    private int id;
+    private String id;
     private OrderService orderService;
     private ProductRepository productRepository;
     private ProducerRepository producerRepository;
     private ClientRepository clientRepository;
 
     public Employee(OrderService orderService, ProductRepository productRepository, ProducerRepository producerRepository, ClientRepository clientRepository) {
-        this.id = Integer.parseInt(UUID.randomUUID().toString());
+        this.id = UUID.randomUUID().toString();
         this.orderService = orderService;
         this.productRepository = productRepository;
         this.producerRepository = producerRepository;
         this.clientRepository = clientRepository;
     }
 
-    public void addOrder(int clientId){
+    public void addOrder(String clientId){
         String productName, productType;
         int quantity;
         Scanner scanner = new Scanner(System.in);
@@ -53,7 +53,7 @@ public class Employee {
 
     }
 
-    public void removeOrder(int orderId){
+    public void removeOrder(String orderId){
         this.orderService.cancellOrder(orderId);
     }
 
@@ -81,7 +81,7 @@ public class Employee {
         }
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 }

@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.UUID;
 
 public class Client {
-    private int id;
+    private String id;
     private List<Order> placedOrders;
 
     public Client(){
-        this.id = Integer.parseInt(UUID.randomUUID().toString());
+        this.id = UUID.randomUUID().toString();
         this.placedOrders = new ArrayList<>();
     }
 
-    public int getId(){
+    public String getId(){
         return this.id;
     }
 

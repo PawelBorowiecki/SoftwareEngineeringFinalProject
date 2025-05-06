@@ -17,8 +17,8 @@ public class ClientRepository {
         return this.clients;
     }
 
-    public Optional<Client> getClient(int id){
-        return this.clients.stream().filter(c -> c.getId() == id).findFirst();
+    public Optional<Client> getClient(String id){
+        return this.clients.stream().filter(c -> c.getId().equals(id)).findFirst();
     }
 
     public void addClient(Client client){

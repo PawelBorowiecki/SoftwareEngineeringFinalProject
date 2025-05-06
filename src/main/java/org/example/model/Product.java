@@ -4,13 +4,13 @@ import java.util.UUID;
 
 public abstract class Product {
     private double price;
-    private int id;
+    private String id;
     private String type;
     private String name;
 
     public Product(double productPrice, String productType, String productName){
         this.price = productPrice;
-        this.id =  Integer.parseInt(UUID.randomUUID().toString());
+        this.id =  UUID.randomUUID().toString();
         this.type = productType;
         this.name = productName;
     }
@@ -22,7 +22,7 @@ public abstract class Product {
         return price;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
