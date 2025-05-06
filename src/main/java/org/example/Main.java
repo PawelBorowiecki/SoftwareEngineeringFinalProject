@@ -1,7 +1,6 @@
 package org.example;
 
-import org.example.model.Client;
-import org.example.model.Employee;
+import org.example.model.*;
 import org.example.repository.ClientRepository;
 import org.example.repository.OrderRepository;
 import org.example.repository.ProducerRepository;
@@ -9,6 +8,7 @@ import org.example.repository.ProductRepository;
 import org.example.service.LogRegister;
 import org.example.service.OrderService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -16,7 +16,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         //TODO rozwarzyc zapisy do plikow i czy konieczne jest odczytywanie z plikow
-        int option, quantity;
+        //TODO inicjalizacja producentow. Musza byc na poczatku
+        //TODO czy dajemy mozliwosc wylistowania wszystkich producentow
+        int option, quantity, day, month, year;
         String type, name, id;
         Scanner scanner = new Scanner(System.in);
         Client client = null;
@@ -36,8 +38,13 @@ public class Main {
                     "3: dodanie produktu do hurtownii\n" +
                     "4: usuwanie produktu z hurtowni\n" +
                     "5: wylistowanie wszystkich klientow\n" +
-                    "6: zapis logow do pliku\n" +
-                    "7: wyczyszczenie logow\n" +
+                    "6: wylistowanie wszystkich producentow\n" +
+                    "7: wylistowanie wszystkich produktow\n" +
+                    "8: wylistowanie zamowien po dacie\n" +
+                    "9: wylistowanie zamowien danego klienta\n" +
+                    "10: wylistowanie wszystkich dostepnych logow\n" +
+                    "11: zapis logow do pliku\n" +
+                    "12: wyczyszczenie logow\n" +
                     "inny znak: koniec dzialania programu");
             option = scanner.nextInt();
             if(option == 1){
@@ -83,8 +90,38 @@ public class Main {
                     System.out.println(c.toString());
                 }
             }else if(option == 6){
-                logRegister.saveToFile();
+                //TODO jesli robimy
             }else if(option == 7){
+                List<Product> products = productRepository.getProducts();
+                for(Product p : products){
+                    System.out.println(p.toString());
+                }
+            }else if(option == 8){
+                System.out.println("Podaj rok");
+                year = scanner.nextInt();
+                System.out.println("Podaj miesiac");
+                month = scanner.nextInt();
+                System.out.println("Podaj dzien");
+                day = scanner.nextInt();
+                List<Order> ordersFromDate = orderRepository.getOrdersByDate(year, month, day);
+                for(Order o : ordersFromDate){
+                    System.out.println(o.toString());
+                }
+            }else if(option == 9){
+                System.out.println("Podaj id klienta, ktorego zamowienia chcesz wyswietlic.");
+                id = scanner.next();
+                List<Order> clientOrders = orderRepository.getOrdersByClientId(id);
+                for(Order o : clientOrders){
+                    System.out.println(o.toString());
+                }
+            }else if(option == 10){
+                List<Log> logs = logRegister.getlogs();
+                for(Log l : logs){
+                    System.out.println(l.toString());
+                }
+            }else if(option == 11){
+                logRegister.saveToFile();
+            }else if(option == 12){
                 logRegister.clear();
             }else{
                 System.out.println("Dziekujemy za skorzystanie z systemu.");

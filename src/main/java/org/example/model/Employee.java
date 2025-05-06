@@ -43,6 +43,7 @@ public class Employee {
                 Optional<Product> product = this.productRepository.getProduct(productName, productType);
                 if(product.isPresent()){
                     order.addProduct(product.get());
+                    //TODO chyba trzeba usunac produkt z repo, bo zostanie sprzedany
                 }else{
                     System.out.println("Nie mamy takiego produktu.");
                 }

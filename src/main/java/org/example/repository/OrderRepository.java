@@ -21,8 +21,8 @@ public class OrderRepository {
         return this.orders.stream().filter(o -> o.getId().equals(id)).findFirst();
     }
 
-    public List<Order> getOrdersByDate(String date){
-        return this.orders.stream().filter(o -> o.getDate().equals(date)).toList();
+    public List<Order> getOrdersByDate(int year, int month, int day){
+        return this.orders.stream().filter(o -> o.getDate().getYear() == year && o.getDate().getMonthValue() == month && o.getDate().getDayOfMonth() == day).toList();
     }
 
     public List<Order> getOrdersByClientId(String clientId){
