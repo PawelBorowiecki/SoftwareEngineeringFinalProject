@@ -2,6 +2,10 @@ package org.example.service;
 
 import org.example.model.Log;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +25,19 @@ public class LogRegister {
     }
 
     public void saveToFile(){
-        //TODO
+        File file = new File("logs.csv");
+        String line;
+        try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))){
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            for(Log log : this.logs){
+                line = String.format("%s,%s,%s,%s\n", log.getDate().toString(), log.getEmployeeId(), log.getOrderId(), log.getState());
+                bufferedWriter.append(line);
+            }
+        }catch(IOException e){
+            throw new RuntimeException("Logs saving to file failed.");
+        }
     }
 
     public void clear(){

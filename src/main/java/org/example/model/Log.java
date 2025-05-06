@@ -15,4 +15,20 @@ public class Log {
         this.date = LocalDateTime.now();
         this.state = state;
     }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public String getState() {
+        return state;
+    }
 }
