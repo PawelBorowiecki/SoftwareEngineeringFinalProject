@@ -1,0 +1,5 @@
+DIY
+screwdriver : DeWalt.DIY.longScrewdriver,shortScrewdriver
+hammer : Dedra.DIY.bigHammer,smallHammer ;
+Carpentry
+drill : Milwaukee.Carpentry.drillWith1Acc,drillWith2Acc ;
