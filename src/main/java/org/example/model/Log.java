@@ -31,4 +31,14 @@ public class Log {
     public String getState() {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return "Log{" +
+                "orderId='" + orderId + '\'' +
+                ", employeeId='" + employeeId + '\'' +
+                ", date=" + date +
+                ", state='" + state + '\'' +
+                '}';
+    }
 }

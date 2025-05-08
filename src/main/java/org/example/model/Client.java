@@ -24,4 +24,12 @@ public class Client {
     public void addPlacedOrder(Order order){
         this.placedOrders.add(order);
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id='" + id + '\'' +
+                ", placedOrders=" + placedOrders +
+                '}';
+    }
 }

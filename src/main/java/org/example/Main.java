@@ -35,7 +35,7 @@ public class Main {
             System.out.println("Podaj co chcesz zrobic.\n" +
                     "1: zlozenie zamowienia klienta\n" +
                     "2: anulowanie zamowienia klienta\n" +
-                    "3: dodanie produktu do hurtownii\n" +
+                    "3: dodanie produktu do hurtowni\n" +
                     "4: usuwanie produktu z hurtowni\n" +
                     "5: wylistowanie wszystkich klientow\n" +
                     "6: wylistowanie wszystkich producentow\n" +

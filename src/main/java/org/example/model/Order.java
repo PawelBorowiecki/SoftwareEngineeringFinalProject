@@ -1,6 +1,7 @@
 package org.example.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class Order {
         this.clientId = clientId;
         this.employeeId = employeeId;
         this.forClient = forClient;
+        this.products = new ArrayList<>();
     }
 
     public double getCost(){
@@ -56,5 +58,18 @@ public class Order {
 
     public String getEmployeeId() {
         return employeeId;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", date=" + date +
+                ", products=" + products +
+                ", clientId='" + clientId + '\'' +
+                ", employeeId='" + employeeId + '\'' +
+                ", isCancelled=" + isCancelled +
+                ", forClient=" + forClient +
+                '}';
     }
 }

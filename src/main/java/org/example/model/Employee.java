@@ -6,6 +6,7 @@ import org.example.repository.ProductRepository;
 import org.example.service.OrderService;
 
 import java.util.Optional;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -63,7 +64,7 @@ public class Employee {
         if(producer.isPresent()){
             Tool tool;
             for(int i = 0; i < quantity; i++){
-                tool = producer.get().produceProduct(name, 10.0, type);     //TODO zmienic cene
+                tool = producer.get().produceProduct(name, new Random().nextDouble() * 100, type);
                 this.productRepository.addProduct(tool);
             }
         }else{
