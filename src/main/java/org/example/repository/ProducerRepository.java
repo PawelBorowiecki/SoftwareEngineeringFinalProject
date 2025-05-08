@@ -16,6 +16,10 @@ public class ProducerRepository {
         loadProducerListFromFile();
     }
 
+    public HashMap<String,HashMap<String, Producer>> getProducers(){
+        return this.producerMap;
+    }
+
     public Optional<Producer> getProducer(String productType, String productName){
         return Optional.ofNullable(producerMap.get(productType).get(productName));
     }
@@ -26,8 +30,10 @@ public class ProducerRepository {
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
             boolean isProductType = true;
             String line;
+            String productType = null;
             while((line = bufferedReader.readLine()) != null){
                 if(isProductType){
+                    productType = line;
                     isProductType = false;
                 }else{
                     String[] params = line.split(" ");
@@ -42,7 +48,7 @@ public class ProducerRepository {
                     for(String s : productsParams){
                         producer.produceProduct(s, new Random().nextDouble() * 100, producerParams[1]);
                     }
-                    addProducer(producer, params[0], productsParams[0]);
+                    addProducer(producer, productType, productsParams[0]);
                 }
             }
 

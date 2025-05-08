@@ -14,12 +14,21 @@ public class Producer {
         this.productsName = new ArrayList<>();
     }
 
-    public String getName(){
-        return name;
+    public String getProductType(){
+        return this.productType;
     }
 
     public Tool produceProduct(String name, double price, String type){
         this.productsName.add(name);
         return new Tool(name, price, type);
+    }
+
+    @Override
+    public String toString() {
+        return "Producer{" +
+                "name='" + name + '\'' +
+                ", productType='" + productType + '\'' +
+                ", productsName=" + productsName +
+                '}';
     }
 }

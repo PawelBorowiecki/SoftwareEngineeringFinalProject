@@ -90,7 +90,17 @@ public class Main {
                     System.out.println(c.toString());
                 }
             }else if(option == 6){
-                //TODO jesli robimy
+                HashMap<String,HashMap<String, Producer>> producers = producerRepository.getProducers();
+                for(String k : producers.keySet()){
+                    System.out.println(k);
+                    for(HashMap<String, Producer> producer : producers.values()){
+                        for(Producer p : producer.values()){
+                            if(p.getProductType().equals(k)){
+                                System.out.println(p);
+                            }
+                        }
+                    }
+                }
             }else if(option == 7){
                 List<Product> products = productRepository.getProducts();
                 for(Product p : products){
