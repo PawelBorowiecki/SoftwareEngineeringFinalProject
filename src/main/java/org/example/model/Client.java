@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class Client {
-    private String id;
-    private List<Order> placedOrders;
+    private final String id;
+    private final List<Order> placedOrders;
 
     public Client(){
         this.id = UUID.randomUUID().toString();
@@ -15,10 +15,6 @@ public class Client {
 
     public String getId(){
         return this.id;
-    }
-
-    public List<Order> getPlacedOrders(){
-        return this.placedOrders;
     }
 
     public void addPlacedOrder(Order order){

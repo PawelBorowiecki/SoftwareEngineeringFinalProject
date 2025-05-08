@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ClientRepository {
-    private List<Client> clients;
+    private final List<Client> clients;
 
     public ClientRepository() {
         this.clients = new ArrayList<>();
@@ -23,5 +23,8 @@ public class ClientRepository {
 
     public void addClient(Client client){
         this.clients.add(client);
+    }
+    public void deleteById(String clientId){
+        this.clients.removeIf(c -> c.getId().equals(clientId));
     }
 }

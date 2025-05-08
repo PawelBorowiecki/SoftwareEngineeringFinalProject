@@ -3,17 +3,14 @@ package org.example.service;
 import org.example.model.Log;
 import org.example.model.Order;
 import org.example.repository.OrderRepository;
-import org.example.repository.ProductRepository;
 
 import java.util.Optional;
 
 public class OrderService {
-    private ProductRepository productRepository;
-    private OrderRepository orderRepository;
-    private LogRegister logRegister;
+    private final OrderRepository orderRepository;
+    private final LogRegister logRegister;
 
-    public OrderService(ProductRepository productRepository, OrderRepository orderRepository, LogRegister logRegister) {
-        this.productRepository = productRepository;
+    public OrderService(OrderRepository orderRepository, LogRegister logRegister) {
         this.orderRepository = orderRepository;
         this.logRegister = logRegister;
     }
@@ -23,13 +20,17 @@ public class OrderService {
         log(order, order.getEmployeeId(), "Active");
     }
 
-    public void cancellOrder(String orderId){
+    public boolean cancellOrder(String orderId){
         Optional<Order> order = this.orderRepository.getOrder(orderId);
         if(order.isPresent()){
             order.get().cancell();
+            this.orderRepository.deleteById(orderId);
+            this.orderRepository.addOrder(order.get());
             log(order.get(), order.get().getEmployeeId(), "Cancelled");
+            return true;
         }else{
             System.out.println("Zamowienie nie istnieje.");
+            return false;
         }
     }
 

@@ -25,7 +25,6 @@ public class ProducerRepository {
     }
 
     private void loadProducerListFromFile(){
-        //TODO przetestowac
         File file = new File("producers.txt");
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
             boolean isProductType = true;
@@ -44,7 +43,6 @@ public class ProducerRepository {
                     String[] producerParams = params[2].split("\\.");
                     String[] productsParams = producerParams[2].split(",");
                     Producer producer = new Producer(producerParams[0], producerParams[1]);
-                    List<String> products = new ArrayList<>();
                     for(String s : productsParams){
                         producer.produceProduct(s, new Random().nextDouble() * 100, producerParams[1]);
                     }

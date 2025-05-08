@@ -3,10 +3,10 @@ package org.example.model;
 import java.util.UUID;
 
 public abstract class Product {
-    private double price;
-    private String id;
-    private String type;
-    private String name;
+    private final double price;
+    private final String id;
+    private final String type;
+    private final String name;
 
     public Product(double productPrice, String productType, String productName){
         this.price = productPrice;
@@ -20,10 +20,6 @@ public abstract class Product {
 
     public double getPrice() {
         return price;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getType() {

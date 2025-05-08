@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderRepository {
-    private List<Order> orders;
+    private final List<Order> orders;
 
     public OrderRepository(){
         this.orders = new ArrayList<>();
@@ -31,5 +31,9 @@ public class OrderRepository {
 
     public void addOrder(Order order){
         this.orders.add(order);
+    }
+
+    public void deleteById(String orderId){
+        this.orders.removeIf(o -> o.getId().equals(orderId));
     }
 }

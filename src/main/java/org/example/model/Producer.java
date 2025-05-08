@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Producer {
-    private String name;
-    private String productType;
-    private List<String> productsName;
+    private final String name;
+    private final String productType;
+    private final List<String> productsName;
 
     public Producer(String name, String type){
         this.name = name;

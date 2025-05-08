@@ -15,9 +15,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //TODO rozwarzyc zapisy do plikow i czy konieczne jest odczytywanie z plikow
-        //TODO inicjalizacja producentow. Musza byc na poczatku
-        //TODO czy dajemy mozliwosc wylistowania wszystkich producentow
         int option, quantity, day, month, year;
         String type, name, id;
         Scanner scanner = new Scanner(System.in);
@@ -27,32 +24,33 @@ public class Main {
         ProducerRepository producerRepository = new ProducerRepository();
         ProductRepository productRepository = new ProductRepository();
         LogRegister logRegister = new LogRegister();
-        OrderService orderService = new OrderService(productRepository, orderRepository, logRegister);
+        OrderService orderService = new OrderService(orderRepository, logRegister);
         Employee employee = new Employee(orderService, productRepository, producerRepository, clientRepository);
 
         System.out.println("Witaj w systemie do zarzadzania hurtownia.");
         while(true){
-            System.out.println("Podaj co chcesz zrobic.\n" +
-                    "1: zlozenie zamowienia klienta\n" +
-                    "2: anulowanie zamowienia klienta\n" +
-                    "3: dodanie produktu do hurtowni\n" +
-                    "4: usuwanie produktu z hurtowni\n" +
-                    "5: wylistowanie wszystkich klientow\n" +
-                    "6: wylistowanie wszystkich producentow\n" +
-                    "7: wylistowanie wszystkich produktow\n" +
-                    "8: wylistowanie zamowien po dacie\n" +
-                    "9: wylistowanie zamowien danego klienta\n" +
-                    "10: wylistowanie wszystkich dostepnych logow\n" +
-                    "11: zapis logow do pliku\n" +
-                    "12: wyczyszczenie logow\n" +
-                    "inny znak: koniec dzialania programu");
+            System.out.println("""
+                    Podaj co chcesz zrobic.
+                    1: zlozenie zamowienia klienta
+                    2: anulowanie zamowienia klienta
+                    3: dodanie produktu do hurtowni
+                    4: usuwanie produktu z hurtowni
+                    5: wylistowanie wszystkich klientow
+                    6: wylistowanie wszystkich producentow
+                    7: wylistowanie wszystkich produktow
+                    8: wylistowanie wszystkich zamowien
+                    9: wylistowanie zamowien po dacie
+                    10: wylistowanie zamowien danego klienta
+                    11: wylistowanie wszystkich dostepnych logow
+                    12: zapis logow do pliku
+                    13: wyczyszczenie logow
+                    inny znak: koniec dzialania programu""");
             option = scanner.nextInt();
             if(option == 1){
                 System.out.println("Czy klient jest nowy? Wybierz T, jesli tak.");
                 type = scanner.next();
                 if(type.equalsIgnoreCase("T")){
                     client = new Client();
-                    clientRepository.addClient(client);
                 }else{
                     System.out.println("Podaj id klienta");
                     id = scanner.next();
@@ -63,12 +61,22 @@ public class Main {
                         System.out.println("Klient o podanym id nie istnieje w bazie.");
                     }
                 }
-                employee.addOrder(client.getId());
+                Order order = employee.addOrder(client);
+                List<Product> products = order.getProducts();
+                System.out.println("Zlozono zamowienie.\n" + "Produkty zamowienia to:");
+                for(Product prod : products){
+                    System.out.println(prod.toString());
+                }
+                System.out.println("Calkowity koszt zamowienia to: " + order.getCost());
             }else if(option == 2){
                 System.out.println("Podaj id zamowienia, ktore chcesz anulowac.");
                 id = scanner.next();
-                employee.removeOrder(id);
+                boolean operationStatus = employee.removeOrder(id);
+                if(operationStatus){
+                    System.out.println("Anulowano zamowienie.");
+                }
             }else if(option == 3){
+                //TODO poprawic dodawanie ostatniego produktu z listy
                 System.out.println("Podaj typ produktu.");
                 type = scanner.next();
                 System.out.println("Podaj nazwe produktu.");
@@ -107,6 +115,11 @@ public class Main {
                     System.out.println(p.toString());
                 }
             }else if(option == 8){
+                List<Order> orders = orderRepository.getOrders();
+                for(Order o : orders){
+                    System.out.println(o.toString());
+                }
+            }else if(option == 9){
                 System.out.println("Podaj rok");
                 year = scanner.nextInt();
                 System.out.println("Podaj miesiac");
@@ -117,22 +130,23 @@ public class Main {
                 for(Order o : ordersFromDate){
                     System.out.println(o.toString());
                 }
-            }else if(option == 9){
+            }else if(option == 10){
                 System.out.println("Podaj id klienta, ktorego zamowienia chcesz wyswietlic.");
                 id = scanner.next();
                 List<Order> clientOrders = orderRepository.getOrdersByClientId(id);
                 for(Order o : clientOrders){
                     System.out.println(o.toString());
                 }
-            }else if(option == 10){
+            }else if(option == 11){
                 List<Log> logs = logRegister.getlogs();
                 for(Log l : logs){
                     System.out.println(l.toString());
                 }
-            }else if(option == 11){
-                logRegister.saveToFile();
             }else if(option == 12){
+                logRegister.saveToFile();
+            }else if(option == 13){
                 logRegister.clear();
+                System.out.println("Wyczyszczono logi.");
             }else{
                 System.out.println("Dziekujemy za skorzystanie z systemu.");
                 break;

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogRegister {
-    private List<Log> logs;
+    private final List<Log> logs;
 
     public LogRegister() {
         this.logs = new ArrayList<>();
@@ -32,12 +32,13 @@ public class LogRegister {
                 file.createNewFile();
             }
             for(Log log : this.logs){
-                line = String.format("%s,%s,%s,%s\n", log.getDate().toString(), log.getEmployeeId(), log.getOrderId(), log.getState());
+                line = String.format("Date: %s, employeeId: %s, orderId: %s, state: %s\n", log.getDate().toString(), log.getEmployeeId(), log.getOrderId(), log.getState());
                 bufferedWriter.append(line);
             }
         }catch(IOException e){
             throw new RuntimeException("Logs saving to file failed.");
         }
+        System.out.println("Zapisano logi do pliku.");
     }
 
     public void clear(){

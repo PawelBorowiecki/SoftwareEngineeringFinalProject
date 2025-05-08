@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.UUID;
 
 public class Order {
-    private String id;
-    private LocalDateTime date;
-    private List<Product> products;
-    private String clientId;
-    private String employeeId;
+    private final String id;
+    private final LocalDateTime date;
+    private final List<Product> products;
+    private final String clientId;
+    private final String employeeId;
     private boolean isCancelled = false;
-    private boolean forClient;
+    private final boolean forClient;
 
     public Order(String clientId, String employeeId, boolean forClient) {
         this.id = UUID.randomUUID().toString();

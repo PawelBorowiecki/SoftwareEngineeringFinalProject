@@ -11,11 +11,11 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class Employee {
-    private String id;
-    private OrderService orderService;
-    private ProductRepository productRepository;
-    private ProducerRepository producerRepository;
-    private ClientRepository clientRepository;
+    private final String id;
+    private final OrderService orderService;
+    private final ProductRepository productRepository;
+    private final ProducerRepository producerRepository;
+    private final ClientRepository clientRepository;
 
     public Employee(OrderService orderService, ProductRepository productRepository, ProducerRepository producerRepository, ClientRepository clientRepository) {
         this.id = UUID.randomUUID().toString();
@@ -25,11 +25,11 @@ public class Employee {
         this.clientRepository = clientRepository;
     }
 
-    public void addOrder(String clientId){
+    public Order addOrder(Client client){
         String productName, productType;
         int quantity;
         Scanner scanner = new Scanner(System.in);
-        Order order = new Order(clientId, this.id, true);
+        Order order = new Order(client.getId(), this.id, true);
         while(true){
             System.out.println("Podaj nazwe produktu, ktory chcesz dodac do zamowienia lub END by zakonczyc.");
             productName = scanner.next();
@@ -44,19 +44,25 @@ public class Employee {
                 Optional<Product> product = this.productRepository.getProduct(productName, productType);
                 if(product.isPresent()){
                     order.addProduct(product.get());
-                    //TODO chyba trzeba usunac produkt z repo, bo zostanie sprzedany
+                    this.productRepository.removeProduct(product.get());
                 }else{
                     System.out.println("Nie mamy takiego produktu.");
                 }
             }
         }
-
         this.orderService.placeOrder(order);
-
+        client.addPlacedOrder(order);
+        if(this.clientRepository.getClient(client.getId()).isPresent()){
+            this.clientRepository.deleteById(client.getId());
+            this.clientRepository.addClient(client);
+        }else{
+            this.clientRepository.addClient(client);
+        }
+        return order;
     }
 
-    public void removeOrder(String orderId){
-        this.orderService.cancellOrder(orderId);
+    public boolean removeOrder(String orderId){
+        return this.orderService.cancellOrder(orderId);
     }
 
     public void addProduct(String type, String name, int quantity){
@@ -67,6 +73,7 @@ public class Employee {
                 tool = producer.get().produceProduct(name, new Random().nextDouble() * 100, type);
                 this.productRepository.addProduct(tool);
             }
+            System.out.println("Dodano produkty.");
         }else{
             System.out.println("Nie znamy producenta, produkujacego takie produkty.");
         }
@@ -81,9 +88,6 @@ public class Employee {
                 break;
             }
         }
-    }
-
-    public String getId() {
-        return id;
+        System.out.println("Zakonczono usuwanie.");
     }
 }
