@@ -76,7 +76,6 @@ public class Main {
                     System.out.println("Anulowano zamowienie.");
                 }
             }else if(option == 3){
-                //TODO poprawic dodawanie ostatniego produktu z listy
                 System.out.println("Podaj typ produktu.");
                 type = scanner.next();
                 System.out.println("Podaj nazwe produktu.");

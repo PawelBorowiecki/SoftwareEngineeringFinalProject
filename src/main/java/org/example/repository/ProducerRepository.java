@@ -21,7 +21,7 @@ public class ProducerRepository {
     }
 
     public Optional<Producer> getProducer(String productType, String productName){
-        return Optional.ofNullable(producerMap.get(productType).get(productName));
+        return this.producerMap.get(productType).values().stream().filter(p -> p.getProductsName().contains(productName)).findFirst();
     }
 
     private void loadProducerListFromFile(){

@@ -18,6 +18,10 @@ public class Producer {
         return this.productType;
     }
 
+    public List<String> getProductsName(){
+        return this.productsName;
+    }
+
     public Tool produceProduct(String name, double price, String type){
         this.productsName.add(name);
         return new Tool(name, price, type);

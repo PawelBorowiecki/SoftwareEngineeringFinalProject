@@ -29,9 +29,9 @@ public abstract class Product {
     @Override
     public String toString() {
         return "Product{" +
-                ", id='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", type='" + type + '\'' +
-                ", name='" + name + ",'" +
+                ", name='" + name + "'," +
                 "price=" + price +
                 '}';
     }
